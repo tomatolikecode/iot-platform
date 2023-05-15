@@ -1,0 +1,23 @@
+type DeviceListRequest {
+	Page int    `json:"page,optional"`
+	Size int    `json:"size,optional"`
+	Name string `json:"name,optional"`
+}
+
+type DeviceListBasic {
+	Identity    string `json:"identity"`
+	Name        string `json:"name"`
+	Key         string `json:"key"`
+	Secret      string `json:"secret"`
+	ProductName string `json:"product_name"`
+}
+
+type DeviceListReply {
+	List  []*DeviceListBasic `json:"list"`
+	Count int64              `json:"count"`
+}
+
+service admin-api {
+	@handler DeviceListHandler
+	get /device/list(DeviceListRequest) returns (DeviceListReply)
+}
