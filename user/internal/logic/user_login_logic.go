@@ -30,7 +30,7 @@ func (l *UserLoginLogic) UserLogin(req *types.UserLoginRequest) (resp *types.Use
 	// todo: add your logic here and delete this line
 	resp = new(types.UserLoginReply)
 	ub := new(models.UserBasic)
-	err = l.svcCtx.DB.Where("name = ? AND password = ? ", req.UserName, helper.Md5(req.Password)).First(ub).Error
+	err = l.svcCtx.DB.Where("name = ? AND password = ? ", req.UserName, req.Password).First(ub).Error
 	if err != nil {
 		logx.Error("[DB ERROR] :", err)
 		err = errors.New("用户名或密码错误")

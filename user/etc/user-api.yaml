@@ -1,3 +1,4 @@
-Name: user-api
-Host: 0.0.0.0
-Port: 10001
+RestConf:
+  Name: user-api
+  Host: 0.0.0.0
+  Port: 10000

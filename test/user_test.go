@@ -9,7 +9,7 @@ import (
 	"github.com/iot-platform/helper"
 )
 
-var userServiceAddr = "http://43.139.116.74:10001"
+var userServiceAddr = "http://43.139.116.74:10000"
 
 func TestUserLogin(t *testing.T) {
 	m := define.M{

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
@@ -18,6 +19,14 @@ func Md5(s string) string {
 	return fmt.Sprintf("%x", md5.Sum([]byte(s)))
 }
 
+// RFC3339ToNormalTime RFC3339 日期格式标准化
+func RFC3339ToNormalTime(rfc3339 string) string {
+	if len(rfc3339) < 19 || rfc3339 == "" || !strings.Contains(rfc3339, "T") {
+		return rfc3339
+	}
+	return strings.Split(rfc3339, "T")[0] + " " + strings.Split(rfc3339, "T")[1][:8]
+}
+
 func If(condition bool, trueValue, falseValue interface{}) interface{} {
 	if condition {
 		return trueValue
@@ -25,6 +34,7 @@ func If(condition bool, trueValue, falseValue interface{}) interface{} {
 	return falseValue
 }
 
+// 生成token
 func GenerateToken(id uint, identity, name string, second int) (string, error) {
 	uc := define.UserClaim{
 		Id:       id,
@@ -43,6 +53,7 @@ func GenerateToken(id uint, identity, name string, second int) (string, error) {
 	return tokenString, nil
 }
 
+// 解析token
 func AnalyzeToken(token string) (*define.UserClaim, error) {
 	uc := new(define.UserClaim)
 	claims, err := jwt.ParseWithClaims(token, uc, func(t *jwt.Token) (interface{}, error) {

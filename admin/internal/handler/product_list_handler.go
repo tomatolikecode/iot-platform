@@ -1,0 +1,33 @@
+package handler
+
+import (
+	"net/http"
+	"strconv"
+
+	"github.com/iot-platform/admin/internal/logic"
+	"github.com/iot-platform/admin/internal/svc"
+	"github.com/iot-platform/admin/internal/types"
+	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/rest/httpx"
+)
+
+func ProductListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.ProductListRequest
+		if err := httpx.Parse(r, &req); err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+			return
+		}
+		logx.Info(req)
+		req.Page, _ = strconv.Atoi(r.URL.Query().Get("page"))
+		req.Size, _ = strconv.Atoi(r.URL.Query().Get("size"))
+		req.Name = r.URL.Query().Get("name")
+		l := logic.NewProductListLogic(r.Context(), svcCtx)
+		resp, err := l.ProductList(&req)
+		if err != nil {
+			httpx.ErrorCtx(r.Context(), w, err)
+		} else {
+			httpx.OkJsonCtx(r.Context(), w, resp)
+		}
+	}
+}
