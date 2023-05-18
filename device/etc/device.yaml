@@ -1,0 +1,10 @@
+RpcServerConf:
+  Name: device.rpc
+  ListenOn: 127.0.0.1:10004
+  Etcd:
+    Hosts:
+      - 43.139.116.74:2379
+    Key: device.rpc
+Mqtt:
+  Broker:
+    tcp://43.139.116.74:1883

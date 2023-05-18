@@ -11,9 +11,7 @@ import (
 func TestMqtt(t *testing.T) {
 	opt := mqtt.NewClientOptions().
 		AddBroker("tcp://43.139.116.74:1883").
-		SetClientID("go-test").
-		SetUsername("get").
-		SetPassword("123456")
+		SetClientID("go-test")
 
 	// 回调
 	opt.SetDefaultPublishHandler(func(client mqtt.Client, message mqtt.Message) {
@@ -29,7 +27,7 @@ func TestMqtt(t *testing.T) {
 	}
 
 	// 订阅主播
-	if token := c.Subscribe("/sys/1/device_key/receive", 0, nil); token.Wait() && token.Error() != nil {
+	if token := c.Subscribe("/sys/#", 0, nil); token.Wait() && token.Error() != nil {
 		t.Fatal(token.Error())
 	}
 
@@ -38,10 +36,10 @@ func TestMqtt(t *testing.T) {
 		t.Fatal(token.Error())
 	}
 
-	time.Sleep(time.Second * 3600 * 24)
+	time.Sleep(time.Second * 10)
 
 	// 取消订阅
-	if token := c.Unsubscribe("/topic/#"); token.Wait() && token.Error() != nil {
+	if token := c.Unsubscribe("/sys/#"); token.Wait() && token.Error() != nil {
 		t.Fatal(token.Error())
 	}
 
