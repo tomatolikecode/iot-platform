@@ -17,6 +17,16 @@ service admin-api {
 	// 产品列表
 	@handler ProductListHandler
 	get /product/list(ProductListRequest) returns (ProductListReply)
+	// 产品新增
+	@handler ProductCreateHandler
+	post /product/create(ProductCreateRequest) returns (ProductCreateReply)
+	// 产品修改
+	@handler ProductModifyHandler
+	put /product/modify(ProductModifyRequest) returns (ProductModifyReply)
+	// 产品删除
+	@handler ProductDeleteHandler
+	delete /product/delete(ProductDeleteRequest) returns (ProductDeleteReply)
+	
 }
 
 type DeviceCreateRequest {
@@ -38,6 +48,26 @@ type DeviceDeleteRequest {
 }
 
 type DeviceDeleteReply {}
+
+type ProductCreateRequest {
+	Name string `json:"name"`
+	Desc string `json:"desc"`
+}
+
+type ProductCreateReply {}
+
+type ProductModifyRequest {
+	Identity string `json:"identity"`
+	ProductCreateRequest
+}
+
+type ProductModifyReply {}
+
+type ProductDeleteRequest {
+	Identity string `json:"identity"`
+}
+
+type ProductDeleteReply {}
 
 type BaseRequest {
 	Page int    `json:"page,optional"`

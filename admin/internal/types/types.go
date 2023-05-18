@@ -24,6 +24,29 @@ type DeviceDeleteRequest struct {
 type DeviceDeleteReply struct {
 }
 
+type ProductCreateRequest struct {
+	Name string `json:"name"`
+	Desc string `json:"desc"`
+}
+
+type ProductCreateReply struct {
+}
+
+type ProductModifyRequest struct {
+	Identity string `json:"identity"`
+	ProductCreateRequest
+}
+
+type ProductModifyReply struct {
+}
+
+type ProductDeleteRequest struct {
+	Identity string `json:"identity"`
+}
+
+type ProductDeleteReply struct {
+}
+
 type BaseRequest struct {
 	Page int    `json:"page,optional"`
 	Size int    `json:"size,optional"`

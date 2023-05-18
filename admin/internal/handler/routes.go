@@ -37,6 +37,21 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 				Path:    "/product/list",
 				Handler: ProductListHandler(serverCtx),
 			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/product/create",
+				Handler: ProductCreateHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPut,
+				Path:    "/product/modify",
+				Handler: ProductModifyHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodDelete,
+				Path:    "/product/delete",
+				Handler: ProductDeleteHandler(serverCtx),
+			},
 		},
 	)
 }
