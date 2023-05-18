@@ -98,15 +98,47 @@ func TestProductList(t *testing.T) {
 
 // 产品创建
 func TestProductCreate(t *testing.T) {
+	productCreate := map[string]string{
+		"name": "测试产品nnnn",
+		"desc": "测试产品nnnn的描述",
+	}
+	data, _ := json.Marshal(productCreate)
 
+	rep, err := helper.HttpPost(adminServiceAddr+"/product/create", data, header...)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	fmt.Println(string(rep))
 }
 
 // 产品更新
 func TestProductModify(t *testing.T) {
+	productModity := map[string]string{
+		"identity": "001",
+		"name":     "测试产品_更新_aaa",
+		"desc":     "描述更新aaa",
+	}
+	data, _ := json.Marshal(productModity)
+	rep, err := helper.HttpPut(adminServiceAddr+"/product/modify", data, header...)
+	if err != nil {
+		t.Fatal(err)
+	}
 
+	fmt.Println(string(rep))
 }
 
 // 产品删除
 func TestProductDelete(t *testing.T) {
+	productDelete := map[string]string{
+		"identity": "001",
+	}
+	data, _ := json.Marshal(productDelete)
 
+	rep, err := helper.HttpDelete(adminServiceAddr+"/product/delete", data, header...)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	fmt.Println(string(rep))
 }
