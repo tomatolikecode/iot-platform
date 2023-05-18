@@ -2,7 +2,6 @@ package handler
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/iot-platform/admin/internal/logic"
 	"github.com/iot-platform/admin/internal/svc"
@@ -10,19 +9,16 @@ import (
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func ProductListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func DeviceDeleteHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.ProductListRequest
+		var req types.DeviceDeleteRequest
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		req.Page, _ = strconv.Atoi(r.URL.Query().Get("page"))
-		req.Size, _ = strconv.Atoi(r.URL.Query().Get("size"))
-		req.Name = r.URL.Query().Get("name")
-		l := logic.NewProductListLogic(r.Context(), svcCtx)
-		resp, err := l.ProductList(&req)
+		l := logic.NewDeviceDeleteLogic(r.Context(), svcCtx)
+		resp, err := l.DeviceDelete(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {
