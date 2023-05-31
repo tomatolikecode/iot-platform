@@ -35,7 +35,7 @@ func main() {
 	})
 	defer s.Stop()
 
-	go mqtt.NewMqttServer(c.Mqtt.Broker)
+	go mqtt.NewMqttServer(c.Mqtt.Broker, c.Mqtt.ClientID, c.Mqtt.Password)
 
 	fmt.Printf("Starting rpc server at %s...", c.RpcServerConf.ListenOn)
 	s.Start()

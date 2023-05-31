@@ -10,35 +10,36 @@ import (
 )
 
 var topic = "/sys/#"
+var MC mqtt.Client
 
-func NewMqttServer(mqttBroker string) {
+func NewMqttServer(mqttBroker, clientID, passwrod string) {
 	opt := mqtt.NewClientOptions().
 		AddBroker(mqttBroker).
-		SetClientID("go-mqtt-server-client-id")
+		SetClientID(clientID).SetUsername("get").SetPassword(passwrod)
 
 	// 回调
 	opt.SetDefaultPublishHandler(publishHandler)
 
-	c := mqtt.NewClient(opt)
+	MC = mqtt.NewClient(opt)
 
 	// 链接
-	if token := c.Connect(); token.Wait() && token.Error() != nil {
+	if token := MC.Connect(); token.Wait() && token.Error() != nil {
 		panic(token.Error())
 	}
 
 	// 订阅主播
-	if token := c.Subscribe(topic, 0, nil); token.Wait() && token.Error() != nil {
+	if token := MC.Subscribe(topic, 0, nil); token.Wait() && token.Error() != nil {
 		panic(token.Error())
 	}
 
 	defer func() {
 		// 取消订阅
-		if token := c.Unsubscribe(topic); token.Wait() && token.Error() != nil {
+		if token := MC.Unsubscribe(topic); token.Wait() && token.Error() != nil {
 			log.Println("[ERROR]: ", token.Error())
 		}
 
 		// 关闭链接
-		c.Disconnect(250)
+		MC.Disconnect(250)
 	}()
 
 	select {}

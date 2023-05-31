@@ -67,11 +67,12 @@ type DeviceListReply struct {
 }
 
 type DeviceListBasic struct {
-	Identity    string `json:"identity"`
-	Name        string `json:"name"`
-	Key         string `json:"key"`
-	Secret      string `json:"secret"`
-	ProductName string `json:"product_name"`
+	Identity       string `json:"identity"`
+	Name           string `json:"name"`
+	Key            string `json:"key"`
+	Secret         string `json:"secret"`
+	ProductName    string `json:"product_name"`
+	LastOnlineTime string `json:"last_online_time"`
 }
 
 type ProductListReply struct {

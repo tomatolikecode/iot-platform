@@ -11,7 +11,7 @@ import (
 func TestMqtt(t *testing.T) {
 	opt := mqtt.NewClientOptions().
 		AddBroker("tcp://43.139.116.74:1883").
-		SetClientID("go-test")
+		SetClientID("go-test").SetUsername("get").SetPassword("123456")
 
 	// 回调
 	opt.SetDefaultPublishHandler(func(client mqtt.Client, message mqtt.Message) {
@@ -32,7 +32,7 @@ func TestMqtt(t *testing.T) {
 	}
 
 	// 发布
-	if token := c.Publish("/sys/1/device_key/ping", 0, false, "Hello Toma"); token.Wait() && token.Error() != nil {
+	if token := c.Publish("/sys/1/device_key/ping", 0, false, "啊啊啊啊"); token.Wait() && token.Error() != nil {
 		t.Fatal(token.Error())
 	}
 
